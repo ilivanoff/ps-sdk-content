@@ -233,7 +233,7 @@ var AjaxExecutor = {
         options.num = ++this.cnt;
         options.ctxt = ctxt;
         options.dataStr = PsObjects.toString(options.data);
-        options.url = options.url ? options.url : 'ps-ajax.php';
+        options.url = options.url ? options.url : '/ps-includes/ps-ajax.php';
 
         this.shedules.push(options);
         this.sheduleHashes[options.action + '|' + options.dataStr] = true;
