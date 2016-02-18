@@ -1871,6 +1871,51 @@ var PsJquery = {
     }
 }
 
+
+
+/**
+ * Утилиты для работы с canvas
+ */
+var PsCanvas = {
+    //Клонирование canvas
+    clone: function (oldCanvas) {
+        //create a new canvas
+        var newCanvas = document.createElement('canvas');
+        var context = newCanvas.getContext('2d');
+
+        //set dimensions
+        newCanvas.width = oldCanvas.width;
+        newCanvas.height = oldCanvas.height;
+
+        //apply the old canvas to the new one
+        context.drawImage(oldCanvas, 0, 0);
+
+        //return the new canvas
+        return newCanvas;
+    },
+    
+    //Клонирование canvas с изменением его размеров
+    cloneAndResize: function (sourceCanvas, width, height) {
+        var $canvas = $(this.clone(sourceCanvas));
+        $canvas.css({
+            width: width,
+            height: height
+        });
+        
+        var newCanvas = document.createElement('canvas');
+
+        //set dimensions
+        newCanvas.width = width;
+        newCanvas.height = height;
+
+        //apply the old canvas to the new one
+        newCanvas.getContext('2d').drawImage($canvas[0], 0, 0, width, height);
+
+        //return the new canvas
+        return newCanvas;
+    }
+}
+
 /*
  * Помощник в добавлении слушателей на прокрутку колёсика.
  * Добавляйте его самостоятельно при наведении на необходимый элемент и отключайте при выведении курсора с него.
