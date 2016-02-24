@@ -354,8 +354,8 @@ var PsMath = {
     
     //Границы TODO (tests)
     bounds: function(x1, x2, min, max) {
-        x1 = PsIs.toNumber(x1, min);
-        x2 = PsIs.toNumber(x2, max);
+        x1 = PsUtil.toNumber(x1, min);
+        x2 = PsUtil.toNumber(x2, max);
         
         var xl = Math.max(Math.min(x1, x2), min);
         var xr = Math.min(Math.max(x1, x2), max);
