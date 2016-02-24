@@ -2771,6 +2771,69 @@ var PsScroll = {
         jQuery.scrollTo(el.offset().top, PsIs.number(speed) || speed ? speed : 500, {
             onAfter: PsUtil.once(onAfter, ctxt)
         });
+    },
+    //Метод проверяет, прокручена ли страница в самый низ
+    isScrolledBottom: function() {
+         return $(document).height() == $(window).scrollTop() + $(window).height();
+    },
+    //Метод привязывает функцию, вызываемую при прокручивании окна в самый низ
+    bindWndScrolledBottom: function(callback, ctxt) {
+        PsScrollWndImpl.bindWndScrolledBottom(callback, ctxt);
+    },
+    //Метод отвязывает функцию, вызываемую при прокручивании окна в самый низ
+    unbindWndScrolledBottom: function(callback) {
+        PsScrollWndImpl.unbindWndScrolledBottom(callback);
+    }
+}
+
+/*
+ * Набор функций, вызываемых при скроллинге окна.
+ * К методам данного клааса НЕ СТОИТ ОБРАЩАТЬСЯ НАПРЯМУЮ.
+ */
+var PsScrollWndImpl = {
+    //Функция, вызываемая при скроллинге окна
+    OnWndScrolled: function() {
+        //Прокручены в самый низ? Вызываем зарегистрированные функции
+        if (PsScroll.isScrolledBottom()) {
+            PsScrollWndImpl.ScrollBottomBinds.walk(function(ob) {
+                ob.f.call(ob.ctxt);
+            });
+        }
+    },
+    //Функции, вызываемые при скроллинге окна
+    ScrollBottomBinds: [],
+    //Метод проверки наличия функции в коллекции
+    fcomparator: function(listener, ob) {
+        return listener===ob.f;//---
+    },
+    //Метод привязывает функцию, вызываемую при прокручивании окна в самый низ
+    bindWndScrolledBottom: function(callback, ctxt) {
+        if (!PsIs.func(callback)) return;//---
+        if (this.ScrollBottomBinds.contains(callback, this.fcomparator)) return;//---
+        this.ScrollBottomBinds.push({
+            ctxt: ctxt,
+            f: callback
+        });
+        this._bindedCheck();
+    },
+    //Метод отвязывает функцию, вызываемую при прокручивании окна в самый низ
+    unbindWndScrolledBottom: function(callback) {
+        if (!PsIs.func(callback)) return;//---
+        this.ScrollBottomBinds.removeValue(callback, this.fcomparator);
+        this._bindedCheck();
+    },
+    //Признак привязанности
+    _binded: false,
+    //Метод привязывает слушатель окна
+    _bindedCheck: function() {
+        var needBind = this.ScrollBottomBinds.length > 0;
+        if (this._binded && needBind || (!this._binded && !needBind)) return;//---
+        this._binded = needBind;
+        if (needBind) {
+            $(window).bind('scroll', this.OnWndScrolled);
+        } else {
+            $(window).unbind('scroll', this.OnWndScrolled);
+        }
     }
 }
 
