@@ -1449,7 +1449,7 @@ jQuery.fn.uiDatepickerSetEnabled = function(enabled) {
 }
 
 var PsResources = {
-    logger: PsLogger.inst('PsResources').setTrace(),
+    logger: PsLogger.inst('PsResources').setTrace().disable(),
     
     callsCnt: 0, /*Кол-во вызовов метода*/
     
