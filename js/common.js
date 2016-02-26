@@ -3100,7 +3100,7 @@ var PsLocalStore = {
     logger: PsLogger.inst('PsLocalStore').setDebug()/*.disable()*/,
     stores: {},
     readTimeout: 2000,
-    isEnabled: isDefined(localStorage),
+    isEnabled: PsCore.hasLocalStorage,
     scopeName: function(scope) {
         return PsIs.empty(scope) || !PsIs.string(scope) ? '_dflt_' : scope;
     },
