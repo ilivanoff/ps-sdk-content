@@ -217,12 +217,26 @@ var PsUtil = {
             return result;//---
         }
     },
+
+    //Принимает на вход функцию и возвращает функцию-обёртку, предотвращающую от повторного вызова, при этом сама функция будет вызвана в отложенном режиме
+    //TODO - написать тесты
+    onceDeferred: function(callback, ctxt, delay) {
+        var done = false;
+        return function() {
+            if(!done && PsIs.func(callback)) {
+                done = true;
+                var _arguments = arguments;
+                PsUtil.scheduleDeferred(function() {
+                    callback.apply(PsIs.defined(ctxt) ? ctxt : this, _arguments);
+                }, null, delay);
+            }
+        }
+    },
     
     //Принимает на вход функцию и оборачивает её для безопасного вызова в контексте.
     safeCall: function(callback, ctxt) {
-        var isFunc = PsIs.func(callback);
         return function() {
-            return isFunc ? callback.apply(ctxt, arguments) : undefined;
+            return PsIs.func(callback) ? callback.apply(ctxt, arguments) : undefined;
         }
     },
     
@@ -727,6 +741,18 @@ var PsObjects = {
             res.push(v);
         }
         return res.sort();
+    },
+    
+    //Возвращает кол-во ключей объекта
+    //TODO - обложить тестами
+    keysCount: function(obj){
+        if(!obj) return 0;
+        var cnt = 0;
+        for (var v in obj) {
+            if(!obj.hasOwnProperty(v)) continue;
+            ++cnt;
+        }
+        return cnt;
     },
     
     //Проверяет, есть ли в объекте ключи

@@ -1493,7 +1493,7 @@ var PsResources = {
                 } : null;
                 
                 waits.doIfHas(url, function(callbacks) {
-                    logger.logDebug('{} Оповещаем функции обратного вызова ({}) для [{}], wh: [{}]', request, callbacks.length, url, wh);
+                    logger.logDebug('{} Оповещаем функции обратного вызова ({}) для [{}], wh: [{}]', request, callbacks.length, url, wh.toString());
                     callbacks.walk(function(callback) {
                         //Функция может и не быть передана, например для предзагрузки
                         callback(wh, url);
@@ -1530,6 +1530,70 @@ var PsResources = {
             IMG.src = url;
         });
     
+    },
+    
+    /*
+     * Метод вызывается для отслеживания загрузки всех переданных изображений
+     * Функция обратного вызова всегда будет вызвана в отложенном режиме.
+     */
+    onAllImagesLoaded: function($images, callback, ctxt) {
+        if (!PsIs.func(callback)) return;//---
+        
+        callback = PsUtil.onceDeferred(callback, ctxt);
+        
+        if(!PsIs.jQuery($images) || $images.isEmptySet()) {
+            callback();
+            return;//---
+        }
+        
+        var logger = this.logger;
+        var request = ++this.callsCnt + '.';
+        var secundomer = new PsSecundomer();
+
+        var waiting = {};
+        var waitingCheck = function() {
+            var doCall = !PsObjects.hasKeys(waiting);
+            if (doCall) {
+                callback();
+                secundomer.stop();
+            }
+            return doCall;
+        }
+        
+        var onImgLoaded = function(src, success) {
+            if (waiting.hasOwnProperty(src)) {
+                logger.logTrace(' < {} {} Изобращение [{}] {} за {} сек.', request, PsObjects.keysCount(waiting), src, success ? 'успешно загружено' : '!загружено с ошибкой!', secundomer.time());
+                delete waiting[src];
+                waitingCheck();
+            }
+        }
+        
+        $images.each(function() {
+            var src = $(this).attr('src');
+            if(!src) return;//---
+            if (waiting.hasOwnProperty(src)) return;//---
+            waiting[src] = true;
+        });
+        
+        if (waitingCheck()) return;//---
+
+        if (logger.isDebug()) {
+            var srcs = PsObjects.keys2array(waiting);
+            logger.logDebug(' > {} Загружаем пакет из {} изображений...', request, srcs.length);
+        }
+        
+        secundomer.start();
+        
+        PsObjects.keys2array(waiting).walk(function(src) {
+            var IMG = new Image();
+            IMG.onload = function () {
+                onImgLoaded(src, true);
+            }
+            IMG.onerror = function() {
+                onImgLoaded(src, false);
+            }
+            IMG.src = src;
+        });
     },
     
     isImgLoaded: function(src) {
@@ -2774,7 +2838,7 @@ var PsScroll = {
     },
     //Метод проверяет, прокручена ли страница в самый низ
     isScrolledBottom: function() {
-         return $(document).height() == $(window).scrollTop() + $(window).height();
+        return $(document).height() == $(window).scrollTop() + $(window).height();
     },
     //Метод привязывает функцию, вызываемую при прокручивании окна в самый низ
     bindWndScrolledBottom: function(callback, ctxt) {
