@@ -1493,7 +1493,7 @@ var PsResources = {
                 } : null;
                 
                 waits.doIfHas(url, function(callbacks) {
-                    logger.logDebug('{} Оповещаем функции обратного вызова ({}) для [{}], wh: [{}]', request, callbacks.length, url, wh.toString());
+                    logger.logDebug('{} Оповещаем функции обратного вызова ({}) для [{}], wh: [{}]', request, callbacks.length, url, wh ? wh.toString() : 'null');
                     callbacks.walk(function(callback) {
                         //Функция может и не быть передана, например для предзагрузки
                         callback(wh, url);
