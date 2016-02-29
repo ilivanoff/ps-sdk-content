@@ -1511,7 +1511,12 @@
         }
       }
     },
-
+    
+    //Azaz
+    getDisabled: function() {
+        return this.isDisabled;
+    },
+    
     dblclick: function () {
       if (this.isDisabled) {
         return;
