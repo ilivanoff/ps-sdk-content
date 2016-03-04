@@ -51,7 +51,7 @@ class FORM_AdminAuditSearchForm extends BaseSearchForm {
             $where[] = Query::assocParam('dt_event', $dateTo, true, '<=');
         }
 
-        $order = 'dt_event asc, id_rec asc';
+        $order = 'dt_event desc, id_rec desc';
 
         $limit = 500;
         /*
@@ -62,6 +62,8 @@ class FORM_AdminAuditSearchForm extends BaseSearchForm {
         foreach ($result as &$row) {
             //Декодируем действие
             $row['n_action'] = BaseAudit::getByCode($process)->decodeAction($row['n_action'], false);
+            //Удалим слеш в начале пользователя, если он там есть
+            $row['user_authed'] = cut_string_start($row['user_authed'], '/');
             //Декодируем данные
             $encoded = 1 * $row['b_encoded'];
             if ($encoded) {
