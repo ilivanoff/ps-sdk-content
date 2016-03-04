@@ -23,7 +23,6 @@ class FORM_AdminAuditSearchForm extends BaseSearchForm {
          */
         $process = $params->int('process');
         $action = $params->int('action');
-        $actionParent = $params->int('parent_action');
         $dateFrom = $params->int('date_from');
         $dateTo = $params->int('date_to');
 
@@ -38,9 +37,6 @@ class FORM_AdminAuditSearchForm extends BaseSearchForm {
         $what[] = 'b_encoded';
 
         $where['id_process'] = $process;
-        if ($actionParent) {
-            $where['id_rec_parent'] = $actionParent;
-        }
         if ($action) {
             $where['n_action'] = $action;
         }
@@ -61,13 +57,13 @@ class FORM_AdminAuditSearchForm extends BaseSearchForm {
         $result = PSDB::getArray($query);
         foreach ($result as &$row) {
             //Декодируем действие
-            $row['n_action'] = BaseAudit::getByCode($process)->decodeAction($row['n_action'], false);
+            $row['n_action'] = PsAuditController::inst($process)->decodeAction($row['n_action']);
             //Удалим слеш в начале пользователя, если он там есть
             $row['user_authed'] = cut_string_start($row['user_authed'], '/');
             //Декодируем данные
             $encoded = 1 * $row['b_encoded'];
             if ($encoded) {
-                $row['v_data'] = print_r(BaseAudit::decodeData($row['v_data']), true);
+                $row['v_data'] = print_r(PsAuditController::decodeData($row['v_data']), true);
             }
             unset($row['b_encoded']);
         }
