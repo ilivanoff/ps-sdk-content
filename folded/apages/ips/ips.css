@@ -1,0 +1,18 @@
+#ap-ips input.ip,
+#ap-ips table.ips {
+    width: 300px;
+}
+
+#ap-ips input.ip,
+#ap-ips table.ips tr td {
+    padding: 0.3em 1em;
+}
+
+#ap-ips table.ips tr.new {
+    font-style: italic;
+}
+
+#ap-ips table.ips tr td a.del {
+    float: right;
+    color: red;
+}
