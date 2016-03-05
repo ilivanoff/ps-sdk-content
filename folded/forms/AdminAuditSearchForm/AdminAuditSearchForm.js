@@ -11,12 +11,18 @@ $(function() {
         },
         validator: {
             rules: {
-                parent_action: {
+                id_inst: {
+                    digits: true
+                },
+                id_type: {
                     digits: true
                 }
             },
             messages: {
-                parent_action: {
+                id_inst: {
+                    digits: 'Требуется целое число'
+                },
+                id_type: {
                     digits: 'Требуется целое число'
                 }
             }
