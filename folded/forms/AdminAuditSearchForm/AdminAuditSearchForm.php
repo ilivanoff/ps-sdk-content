@@ -23,6 +23,8 @@ class FORM_AdminAuditSearchForm extends BaseSearchForm {
          */
         $process = $params->int('process');
         $action = $params->int('action');
+        $idInst = $params->int('id_inst');
+        $idType = $params->int('id_type');
         $dateFrom = $params->int('date_from');
         $dateTo = $params->int('date_to');
 
@@ -43,6 +45,12 @@ class FORM_AdminAuditSearchForm extends BaseSearchForm {
         $where['id_process'] = $process;
         if ($action) {
             $where['n_action'] = $action;
+        }
+        if ($idInst) {
+            $where['id_inst'] = $idInst;
+        }
+        if ($idType) {
+            $where['id_type'] = $idType;
         }
         if ($dateFrom) {
             $where[] = Query::assocParam('dt_event', $dateFrom, true, '>=');
