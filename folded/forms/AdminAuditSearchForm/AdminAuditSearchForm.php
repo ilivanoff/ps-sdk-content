@@ -29,12 +29,14 @@ class FORM_AdminAuditSearchForm extends BaseSearchForm {
         /*
          * Запрос
          */
-        $what[] = 'id_rec';
-        $what[] = 'concat(ifnull(id_user, ""), concat("/", id_user_authed)) as user_authed';
-        $what[] = 'dt_event';
+        //$what[] = 'id_rec';
+        $what[] = 'concat(ifnull(id_user, ""), concat("/", id_user_authed)) as user';
         $what[] = 'n_action';
         $what[] = 'v_data';
         $what[] = 'b_encoded';
+        $what[] = 'v_remote_addr';
+        $what[] = 'v_user_agent';
+        $what[] = 'dt_event';
 
         $where['id_process'] = $process;
         if ($action) {
@@ -59,7 +61,7 @@ class FORM_AdminAuditSearchForm extends BaseSearchForm {
             //Декодируем действие
             $row['n_action'] = PsAuditController::inst($process)->decodeAction($row['n_action']);
             //Удалим слеш в начале пользователя, если он там есть
-            $row['user_authed'] = cut_string_start($row['user_authed'], '/');
+            $row['user'] = cut_string_start($row['user'], '/');
             //Декодируем данные
             $encoded = 1 * $row['b_encoded'];
             if ($encoded) {
