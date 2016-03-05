@@ -5,6 +5,7 @@ $(function () {
     var $BUNNONS = $BOX.find('button');
     var $IP_INPUT = $BOX.find('input.ip');
     var $TABLE = $BOX.find('table.ips tbody');
+    var $COUNT = $BOX.find('span.count');
 
     var um = new PsUpdateModel(null, function () {
         $BUNNONS.uiButtonDisable();
@@ -23,11 +24,13 @@ $(function () {
             ip: ip,
             action: action
         },
-                function (res) {
-                    if (PsIs.func(onOk)) {
-                        onOk(res);
-                    }
-                }, function (error) {
+        function (res) {
+            if (PsIs.func(onOk)) {
+                onOk(res);
+            }
+            //Пересчитаем кол-во забаненных IP адресов
+            $COUNT.text($TABLE.children('tr').size());
+        }, function (error) {
             InfoBox.popupError(error);
         }, function () {
             um.stop();

@@ -2,7 +2,7 @@
 <button class="ip-ban">Забанить</button>
 <button class="reload">Перезагрузить</button>
 
-<h4>Список забаненных IP адресов ({count($banned)}):</h4>
+<h4>Список забаненных IP адресов (<span class="count">{count($banned)}</span>):</h4>
 <table class="colored ips">
     <tbody>
         {foreach $banned as $ban}

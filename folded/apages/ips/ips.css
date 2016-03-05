@@ -16,3 +16,7 @@
     float: right;
     color: red;
 }
+
+#ap-ips h4 span.count {
+    color: #444;
+}
