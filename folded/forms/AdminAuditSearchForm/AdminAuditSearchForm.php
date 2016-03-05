@@ -29,7 +29,7 @@ class FORM_AdminAuditSearchForm extends BaseSearchForm {
         /*
          * Запрос
          */
-        //$what[] = 'id_rec';
+        $what[] = 'id_rec';
         $what[] = 'concat(ifnull(id_user, ""), concat("/", id_user_authed)) as user';
         $what[] = 'n_action';
         $what[] = 'v_data';
