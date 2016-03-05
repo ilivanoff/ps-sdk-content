@@ -39,10 +39,10 @@ var popupWindowManager = {
     },
     windowFeatures: function () {
         return 'status=no,toolbar=no,menubar=no,scrollbars=yes' +
-                ',width=' + this.windowWidth +
-                ',height=' + this.windowHeight +
-                ',left=' + ((screen.width - this.windowWidth) / 2) +
-                ',top=' + ((screen.height - this.windowHeight) / 2 - 20);
+        ',width=' + this.windowWidth +
+        ',height=' + this.windowHeight +
+        ',left=' + ((screen.width - this.windowWidth) / 2) +
+        ',top=' + ((screen.height - this.windowHeight) / 2 - 20);
     },
     openWindow: function (pageIdent, paramsObj, paramsStr) {
         pageIdent = pageIdent || '';
@@ -102,6 +102,8 @@ var popupWindowManager = {
 var MathJaxManager = {
     init: function () {
         //1. Кнопка, всплывающая над формулами и позволяющая перейти к её редактированию
+        if (!PsUtil.hasGlobalObject('PsBubble')) return;//---
+        
         PsBubble.registerBubbleStick('.TeX:not(.TeX-no-tooltip .TeX)', function (onDone, $href) {
             var hash = MathJaxManager.getTexHash($href);
 
@@ -164,22 +166,22 @@ var MathJaxManager = {
             ctxt: this,
             hash: hash
         },
-                function (tex) {
-                    this.decoded[key] = tex;
-                    return tex;
-                },
-                function (err) {
-                    InfoBox.popupError(err);
-                    this.decoded[key] = null;
-                    return null;
-                },
-                function (tex) {
-                    $.each(this.waiting[key], function (num, fn) {
-                        fn.call(tex, tex);
-                    });
+        function (tex) {
+            this.decoded[key] = tex;
+            return tex;
+        },
+        function (err) {
+            InfoBox.popupError(err);
+            this.decoded[key] = null;
+            return null;
+        },
+        function (tex) {
+            $.each(this.waiting[key], function (num, fn) {
+                fn.call(tex, tex);
+            });
 
-                    delete this.waiting[key];
-                });
+            delete this.waiting[key];
+        });
     }
 }
 
