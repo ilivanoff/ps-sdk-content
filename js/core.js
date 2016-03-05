@@ -98,6 +98,10 @@ var PsIs = {
     
     empty: function(ob) {
         return !ob || (PsIs.array(ob) && ob.length==0) || (PsIs.string(ob) && PsUtil.trim(ob).length==0) || (PsIs.jQuery(ob) && ob.size()==0);
+    },
+    
+    email: function(email) {
+        return PsIs.string(email) && email.length>=5 && /\S+@\S+\.\S+/.test(email);
     }
 }
 

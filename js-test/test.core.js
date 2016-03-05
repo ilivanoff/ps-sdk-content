@@ -150,6 +150,7 @@ doTestPsIs('number', [1, -1.2, '3', '-1.7'], [doTestPsIs, null, undefined, false
 doTestPsIs('integer', [1, '3', '4e2', -1, '-4'], [-1.2, '-1.7', doTestPsIs, null, undefined, false, true, '', '{}', {}, [], Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY, NaN]);
 doTestPsIs('exponent', [Number.MAX_VALUE, Number.MIN_VALUE, 7.123.toExponential(2), '1e+1', '1E+1', 99999999999999999999999999, -888888888888888888888888], ['1a+1', '1B+1', 1, 1.2, -4, -1.2, '-1.7', doTestPsIs, null, undefined, false, true, '', '{}', {}, [], Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY, NaN]);
 doTestPsIs('decimal', [1.1, '3.1', -3.1, '-2.1'], [-1, '-1', 2, '3', doTestPsIs, null, undefined, false, true, '', '{}', {}, [], Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY, NaN]);
+doTestPsIs('email', ['a@m.r', 'a@mail.ru', 'мыло@сайт.рф', 'my@u.de', 'a@x.en', 'ukr@mail.uk', '1@a.ru'], ['a@ru', '@ru', '@mail.ru', 'x@.', '@a.', '@a', -1, '-1', 2, '3', doTestPsIs, null, undefined, false, true, '', '{}', {}, [], Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY, NaN]);
 if (PsCore.hasJquery) {
     doTestPsIs('jQuery', [$('.xxx-xxx')], [1, '3', -1.2, '-1.7', doTestPsIs, null, undefined, false, true, '', '{}', {}, [], NaN]);
     doTestPsIs('empty', [$('.xxx-xxx'), [], 0, false, null, undefined, '', ' ', '   ', NaN], [1, '3', -1.2, '-1.7', doTestPsIs, true, '{}', {}, $('#qunit')]);
