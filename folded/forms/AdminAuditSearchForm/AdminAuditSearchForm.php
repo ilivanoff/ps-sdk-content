@@ -32,6 +32,8 @@ class FORM_AdminAuditSearchForm extends BaseSearchForm {
         $what[] = 'id_rec';
         $what[] = 'concat(ifnull(id_user, ""), concat("/", id_user_authed)) as user';
         $what[] = 'n_action';
+        $what[] = 'id_inst';
+        $what[] = 'id_type';
         $what[] = 'v_data';
         $what[] = 'b_encoded';
         $what[] = 'v_remote_addr';
