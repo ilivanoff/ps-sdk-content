@@ -20,28 +20,37 @@ $(function() {
                 var $btn = $(this);
 
                 if ($btn.is('.do')) {
-                    disableAll();
+                    
+                    var className = $li.data('class');
+                    var methodName = $li.data('method');
+                    
+                    var execute = function() {
+                        disableAll();
 
-                    var data = {
-                        'class': $li.data('class'),
-                        method: $li.data('method'),
-                        params: []
-                    };
-                    var br = false;
-                    $li.find('input, select').each(function () {
-                        var $input = $(this);
-                        var val = $input.val();
-                        br = br || $.trim(val) == '';
-                        if (br)
-                            return; //---
-                        data.params.push(val);
-                    });
+                        var data = {
+                            'class': className,
+                            method: methodName,
+                            params: []
+                        };
+                        var br = false;
+                        $li.find('input, select').each(function () {
+                            var $input = $(this);
+                            var val = $input.val();
+                            br = br || $.trim(val) == '';
+                            if (br)
+                                return; //---
+                            data.params.push(val);
+                        });
 
-                    AdminAjaxExecutor.execute('TestAction', data, function (res) {
-                        InfoBox.popupSuccess(res);
-                    }, data.method, function () {
-                        enableAll();
-                    });
+                        AdminAjaxExecutor.execute('TestAction', data, function (res) {
+                            InfoBox.popupSuccess(res);
+                        }, data.method, function () {
+                            enableAll();
+                        });
+                    }
+                    
+                    PsDialogs.confirm('Выполнить <b>'+className+'::'+methodName+'</b> ?', execute);
+                    
                 }
 
                 if ($btn.is('.clear')) {
