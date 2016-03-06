@@ -19,7 +19,6 @@
             <h4>Специальные страницы</h4>
             {text}
             {page_href code=$smarty.const.PAGE_TEST p_pagetype='patterns'}Шаблоны{/page_href}
-            {page_href code=$smarty.const.PAGE_TEST p_pagetype='testmethods'}Тестовые методы{/page_href}
             {page_href code=$smarty.const.PAGE_TEST p_pagetype='smarty'}Функции Smarty{/page_href}
             {/text}
 

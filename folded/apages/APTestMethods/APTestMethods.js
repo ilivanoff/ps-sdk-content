@@ -23,7 +23,8 @@ $(function() {
                     disableAll();
 
                     var data = {
-                        method: $li.data('name'),
+                        'class': $li.data('class'),
+                        method: $li.data('method'),
                         params: []
                     };
                     var br = false;

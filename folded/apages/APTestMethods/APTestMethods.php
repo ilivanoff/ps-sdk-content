@@ -12,9 +12,7 @@ class AP_APTestMethods extends BaseAdminPage {
 
         $production = PsDefines::isProduction();
         $params['production'] = $production;
-        if (!$production) {
-            $params['methods'] = TestManagerCaller::getMethodsList();
-        }
+        $params['classes'] = $production ? null : PsDevClasses::getMethodsList();
         echo $this->getFoldedEntity()->fetchTpl($params);
     }
 
