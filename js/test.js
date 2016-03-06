@@ -63,15 +63,15 @@ $(function () {
     PsTimeLine.create({
         div: '#ps-timeline',
         bands: [{
-                width: "85%",
-                intervalUnit: PsTimeLine.DateTime.DECADE,
-                intervalPixels: 100
-            }, {
-                overview: true,
-                width: "15%",
-                intervalUnit: PsTimeLine.DateTime.CENTURY,
-                intervalPixels: 200
-            }],
+            width: "85%",
+            intervalUnit: PsTimeLine.DateTime.DECADE,
+            intervalPixels: 100
+        }, {
+            overview: true,
+            width: "15%",
+            intervalUnit: PsTimeLine.DateTime.CENTURY,
+            intervalPixels: 200
+        }],
         data: {
             lident: 'poets'
         }
@@ -96,58 +96,6 @@ $(function () {
     });
     set();
 });
-
-$(function () {
-    $('.testmethods').each(function () {
-        var $BODY = $(this);
-
-        function disableAll() {
-            $BODY.find('input').disable();
-            $BODY.find('button').uiButtonDisable();
-        }
-
-        function enableAll() {
-            $BODY.find('input').enable();
-            $BODY.find('button').uiButtonEnable();
-        }
-
-        $BODY.children('li').each(function () {
-            var $li = $(this);
-            $li.find('button').button().click(function () {
-                var $btn = $(this);
-
-                if ($btn.is('.do')) {
-                    disableAll();
-
-                    var data = {
-                        method: $li.data('name'),
-                        params: []
-                    };
-                    var br = false;
-                    $li.find('input, select').each(function () {
-                        var $input = $(this);
-                        var val = $input.val();
-                        br = br || $.trim(val) == '';
-                        if (br)
-                            return; //---
-                        data.params.push(val);
-                    });
-
-                    AjaxExecutor.execute('TestAction', data, function (res) {
-                        InfoBox.popupSuccess(res);
-                    }, data.method, function () {
-                        enableAll();
-                    });
-                }
-
-                if ($btn.is('.clear')) {
-                    $li.find('input, select').val('');
-                }
-            });
-        });
-    });
-});
-
 
 $(function () {
     var boxes = [];
@@ -181,30 +129,30 @@ $(function () {
 $(function () {
     var $buttons = $('.ps-ui-buttons').children();
     $buttons.first().
-            button({
-                label: 'Обычная кнопка', /*Какой текст показывать (если нет, то будет взять из value или html)*/
-                text: true, /*Вообще - показываем ли текст, или только картинку*/
-                icons: {
-                    primary: "ui-icon-gear",
-                    secondary: "ui-icon-triangle-1-s"
-                }
-            });
+    button({
+        label: 'Обычная кнопка', /*Какой текст показывать (если нет, то будет взять из value или html)*/
+        text: true, /*Вообще - показываем ли текст, или только картинку*/
+        icons: {
+            primary: "ui-icon-gear",
+            secondary: "ui-icon-triangle-1-s"
+        }
+    });
 
     var $set = $buttons.last();
     $set.children().
-            first().button({
+    first().button({
         text: false,
         icons: {
             primary: "ui-icon-carat-1-n"
         }
     }).
-            next().button({
+    next().button({
         text: false,
         icons: {
             primary: "ui-icon-carat-1-s"
         }
     }).
-            next().button({
+    next().button({
         text: false,
         icons: {
             primary: "ui-icon-carat-1-nw"

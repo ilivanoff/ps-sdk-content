@@ -105,10 +105,6 @@ class PB_test extends AbstractPageBuilder {
                     );
                     break;
 
-                case 'testmethods':
-                    $smParams['methods'] = TestManagerCaller::getMethodsList();
-                    break;
-
                 case 'imgbysize':
                     $images = DirManager::images()->getDirContentFull(null, DirItemFilter::IMAGES, array('GymExercises'));
                     DirItemSorter::inst()->sort($images, DirItemSorter::BY_SIZE);

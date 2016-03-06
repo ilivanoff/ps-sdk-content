@@ -1,0 +1,11 @@
+.testmethods button {
+    visibility: hidden;
+}
+
+.testmethods li:hover button{
+    visibility: visible;
+}
+
+.testmethods table.method-names td.col1 {
+    width: 20%;
+}

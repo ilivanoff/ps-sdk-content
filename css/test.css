@@ -52,15 +52,6 @@ div.demo-head.first{
     width: 30%;
 }
 
-
-.testmethods button {
-    visibility: hidden;
-}
-
-.testmethods li:hover button{
-    visibility: visible;
-}
-
 /*
  Для сортируемого списка сменим курсор
 */
