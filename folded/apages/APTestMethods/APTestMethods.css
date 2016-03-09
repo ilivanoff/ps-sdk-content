@@ -9,3 +9,11 @@
 .testmethods table.method-names td.col1 {
     width: 20%;
 }
+
+.testmethods table.method-names td.col2 {
+    width: 15%;
+}
+
+.testmethods table.method-names td.col2 input {
+    width: 100%;
+}

@@ -16,7 +16,8 @@
                                             {foreach $method.params as $param}
                                                 <tr>
                                                     <td class="col1">{$param.name}</td>
-                                                    <td><input type="text" name="{$param.name}"/>{if !is_null($param.dflt)} {gray}({$param.dflt}){/gray}{/if}</td>
+                                                    <td class="col2"><input type="text" name="{$param.name}"/>{if !is_null($param.dflt)} {gray}({$param.dflt}){/gray}{/if}</td>
+                                                    <td class="col3">{$param.descr}</td>
                                                 </tr>
                                             {/foreach}
                                         </table>
