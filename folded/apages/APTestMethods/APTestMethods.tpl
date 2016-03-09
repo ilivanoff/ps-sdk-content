@@ -1,6 +1,6 @@
 <div id="ap-test-methods-types" class="ps-tabs">
     {foreach $classesStore as $type=>$classes}
-        <div title="{$type}">
+        <div title="{$type|strtoupper}">
             <div id="ap-test-methods-{$type}" class="ps-tabs">
                 {foreach $classes as $className=>$methods}
                     <div title="{$className}">
