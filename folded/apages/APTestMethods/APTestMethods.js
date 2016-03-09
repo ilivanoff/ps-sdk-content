@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
     var $BOX = $('#ap-APTestMethods');
 
     $('.testmethods', $BOX).each(function () {
@@ -20,17 +20,19 @@ $(function() {
                 var $btn = $(this);
 
                 if ($btn.is('.do')) {
-                    
+
+                    var typeName = $li.data('type');
                     var className = $li.data('class');
                     var methodName = $li.data('method');
-                    
-                    var execute = function() {
+
+                    var execute = function () {
                         disableAll();
 
                         var data = {
+                            'type': typeName,
                             'class': className,
-                            method: methodName,
-                            params: []
+                            'method': methodName,
+                            'params': []
                         };
                         var br = false;
                         $li.find('input, select').each(function () {
@@ -48,9 +50,9 @@ $(function() {
                             enableAll();
                         });
                     }
-                    
-                    PsDialogs.confirm('Выполнить <b>'+className+'::'+methodName+'</b> ?', execute);
-                    
+
+                    PsDialogs.confirm('Выполнить <b>' + className + '::' + methodName + '</b> ?', execute);
+
                 }
 
                 if ($btn.is('.clear')) {

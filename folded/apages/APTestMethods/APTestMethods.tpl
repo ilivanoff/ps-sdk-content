@@ -1,17 +1,12 @@
-<div id="ap-test-methods-top" class="ps-tabs">
-    <div title="Actions">
-    </div>
-
-    <div title="Dev Actions">
-        {if $production}
-            <div class="info_box warn">Тестовые методы недоступны в продуктивном режиме</div>
-        {else}
-            <div id="ap-test-methods" class="ps-tabs">
+<div id="ap-test-methods-types" class="ps-tabs">
+    {foreach $classesStore as $type=>$classes}
+        <div title="{$type}">
+            <div id="ap-test-methods-{$type}" class="ps-tabs">
                 {foreach $classes as $className=>$methods}
                     <div title="{$className}">
                         <ol class="testmethods">
                             {foreach $methods as $name=>$method}
-                                <li data-class="{$className}" data-method="{$name}">
+                                <li data-type="{$type}" data-class="{$className}" data-method="{$name}">
                                     <h4>{$name}</h4>
                                     {text}
                                     {$method.descr}
@@ -37,6 +32,6 @@
                     </div>
                 {/foreach}
             </div>
-        {/if}
-    </div>
+        </div>
+    {/foreach}
 </div>

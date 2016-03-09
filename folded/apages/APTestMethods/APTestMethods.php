@@ -10,9 +10,7 @@ class AP_APTestMethods extends BaseAdminPage {
         $navigation = AdminPageNavigation::inst();
         $navigation->setCurrent('Тестовые методы');
 
-        $production = PsDefines::isProduction();
-        $params['production'] = $production;
-        $params['classes'] = $production ? null : PsDevClasses::getMethodsList();
+        $params['classesStore'] = PsDevClasses::getMethodsList();
         echo $this->getFoldedEntity()->fetchTpl($params);
     }
 
