@@ -789,6 +789,10 @@ p, div.p {
     line-height: 1.5em;
 }
 
+p span.fa, div.p span.fa {
+    text-indent: 0px;
+}
+
 div.text {
     margin: 10px 0;
     line-height: 1.6em;
