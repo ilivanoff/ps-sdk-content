@@ -3,7 +3,7 @@
 class AP_APTestMethods extends BaseAdminPage {
 
     public function title() {
-        return 'Тестовые методы';
+        return 'Методы быстрого доступа';
     }
 
     public function buildContent() {
