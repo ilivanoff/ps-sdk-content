@@ -8,7 +8,7 @@ class AP_APTestMethods extends BaseAdminPage {
 
     public function buildContent() {
         $navigation = AdminPageNavigation::inst();
-        $navigation->setCurrent('Тестовые методы');
+        $navigation->setCurrent('Методы быстрого доступа');
 
         $params['classesStore'] = PsAdminAccessClasses::getMethodsList();
         echo $this->getFoldedEntity()->fetchTpl($params);
