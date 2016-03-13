@@ -1,0 +1,80 @@
+root [Anas...]
+azaz [Azaz...]
+
+adduser azaz
+sudo usermod -a -G www-data azaz
+groups azaz
+
+visudo
+   [+ line] azaz    ALL=(ALL:ALL) ALL
+
+sudo tasksel install lamp-server
+   [mysql root] Azaz...
+
+[Проверим Apache]
+service --status-all
+[ПЕРЕЗАГРУЗКА]
+sudo /etc/init.d/apache2 restart
+[Установка модуля переобределения УРЛ, если необходимо]
+sudo a2enmod rewrite
+
+/etc/php5/apache2/php.ini
+sudo cp /etc/php5/apache2/php.ini /etc/php5/apache2/php.ini.bak
+
+[https://www.digitalocean.com/community/tutorials/apache-ubuntu-14-04-lts-ru]
+
+sudo mkdir -p /var/www/ilivanoff.ru/www
+sudo chown -R www-data:www-data /var/www
+sudo chmod -R 775 /var/www
+
+sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/ilivanoff.ru.conf
+
+[Редактируем созданный конфигурационный файл ilivanoff.ru.conf]
+<VirtualHost *:80>
+    ServerAdmin ilivanoff@ilivanoff.ru
+    ServerName ilivanoff.ru
+    ServerAlias www.ilivanoff.ru
+    DocumentRoot /var/www/ilivanoff.ru/www
+    <Directory /var/www/ilivanoff.ru>
+		#Запретим навигацию по директориям
+		Options None
+        #Разрешение на перезапись всех директив при помощи .htaccess
+        AllowOverride All
+    </Directory>
+    ErrorLog /var/www/ilivanoff.ru/error.log
+    CustomLog /var/www/ilivanoff.ru/access.log combined
+</VirtualHost>
+
+sudo a2dissite 000-default
+sudo a2ensite ilivanoff.ru
+sudo /etc/init.d/apache2 restart
+
+[Откроем в браузере http://128.199.44.123]
+
+[Устанавливаем wordpress http://www.liberiangeek.net/2015/06/how-to-install-wordpress-on-ubuntu-15-04-server/]
+cd /var/www/ilivanoff.ru
+wget http://wordpress.org/latest.tar.gz
+[Заходим в скачанный архив http://wordpress.org/latest.tar.gz и переносим в папку /var/www/ilivanoff.ru/www]
+[Копируем файл конфига к корреную директорию]
+cp /var/www/ilivanoff.ru/www/wp-config-sample.php /var/www/ilivanoff.ru/wp-config.php
+
+[MySQL, http://help.ubuntu.ru/wiki/mysql]
+[Настройки хранятся в /etc/mysql/my.cnf]
+sudo cp /etc/mysql/mysql.conf.d/mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf.bak
+[Внести настройки согласно, http://help.ubuntu.ru/wiki/mysql]
+[Перезагрузим сервис]
+sudo service mysql restart
+
+mysql -u root -p
+CREATE DATABASE wp_ilivanoff;
+CREATE USER wp_ilivanoff@localhost IDENTIFIED BY 'WordPress123';
+GRANT ALL ON wp_ilivanoff.* to  wp_ilivanoff@localhost;
+FLUSH PRIVILEGES;
+exit;
+
+[Редактируем - прописывам параметры доступа к БД и ключи соли из https://api.wordpress.org/secret-key/1.1/salt/]
+/var/www/ilivanoff.ru/wp-config.php
+
+
+[Обвновление siteurl если изменил]
+update wp_options set option_value='http://ilivanoff.ru' where option_name='siteurl';
