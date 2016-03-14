@@ -27,3 +27,12 @@ server {
                 deny all;
         }
 }
+
+server {
+    listen 80;
+    #listen 443 ssl;
+    server_name thflowgit2.com www.thflowgit2.com;
+    #return 301 $scheme://www.new-name.com$request_uri;
+    #rewrite ^ http://www.thflow.com permanent;
+    return 301 http://www.thflowgit.com$request_uri;
+}
