@@ -1,0 +1,6 @@
+apt-get install git
+git clone https://github.com/ilivanoff/uflow.git /var/www/thflowgit
+git pull
+git submodule update --init
+git submodule foreach git checkout master
+git submodule foreach git pull origin master
