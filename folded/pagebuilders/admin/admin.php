@@ -15,7 +15,7 @@ class PB_admin extends AbstractPageBuilder {
         } else {
             //Показываем форму авторизации админа только если используем базовый провайдер безопасности
             if (PsSecurity::isBasic() && FORM_AdminLoginForm::getInstance()->isValid4Process()) {
-                if (AdminAuthManager::getInstance()->login()) {
+                if (AdminAuthManager::login()) {
                     PsUtil::redirectToSelf();
                 }
             }
