@@ -1,0 +1,6 @@
+sudo apt-get install openjdk-7-jre-headless
+java -version
+sudo apt-get install yui-compressor
+
+Проверить можно на файле client.js, например так:
+#yui-compressor --charset utf-8 --type js -o client.min.js client.js
