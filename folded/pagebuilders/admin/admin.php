@@ -23,12 +23,6 @@ class PB_admin extends AbstractPageBuilder {
     }
 
     protected function doBuild(\PageContext $ctxt, \PageBuilderContext $builderCtxt, \RequestArrayAdapter $requestParams, \ArrayAdapter $buildParams) {
-        //HTTP Заголовки
-        //http://stackoverflow.com/questions/49547/making-sure-a-web-page-is-not-cached-across-all-browsers
-        header('Cache-Control: no-cache, no-store, must-revalidate'); // HTTP 1.1.
-        header('Pragma: no-cache'); // HTTP 1.0.
-        header('Expires: 0'); // Proxies.
-        
         //1. ЗАГОЛОВОК
         $builderCtxt->setTitle($this->authed ? 'Админка | ' . $this->adminPage->title() : 'xxx');
 
