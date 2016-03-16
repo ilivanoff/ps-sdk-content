@@ -11,8 +11,13 @@ visudo
 sudo tasksel install lamp-server
    [mysql root] Azaz...
 
+[Симлинки для удобства]
+ln -s /etc/apache2 /home/azaz/apache2
+ln -s /etc/nginx /home/azaz/nginx
+   
 [Проверим Apache]
 service --status-all
+systemctl status apache2
 [ПЕРЕЗАГРУЗКА]
 sudo /etc/init.d/apache2 restart
 [Установка модуля переобределения УРЛ, если необходимо]
