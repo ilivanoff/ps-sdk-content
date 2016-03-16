@@ -43,6 +43,8 @@ sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-availab
     </Directory>
     ErrorLog /var/www/ilivanoff.ru/error.log
     CustomLog /var/www/ilivanoff.ru/access.log combined
+	
+	ErrorDocument 404 /ps-content/errors/404.html
 </VirtualHost>
 
 sudo a2dissite 000-default
