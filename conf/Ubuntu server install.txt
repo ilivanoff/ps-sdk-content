@@ -14,6 +14,7 @@ sudo tasksel install lamp-server
 [Симлинки для удобства]
 ln -s /etc/apache2 /home/azaz/apache2
 ln -s /etc/nginx /home/azaz/nginx
+ln -s /var/www /home/azaz/www
    
 [Проверим Apache]
 service --status-all
