@@ -2802,53 +2802,6 @@ function scrollTop(){
     jQuery.scrollTo(0, 500);
 }
 
-var PsScroll = {
-    isScrolling: function() {
-        return $('html:animated').size() > 0;
-    },
-    scrollTop: function(speed) {
-        jQuery.scrollTo(0, PsIs.number(speed) || speed ? speed : 500);
-    },
-    jumpTop: function() {
-        jQuery.scrollTo(0);
-    },
-    scrollBottom: function(speed) {
-        jQuery.scrollTo($(document).height(), PsIs.number(speed) || speed ? speed : 500);
-    },
-    jumpBottom: function() {
-        this.scrollBottom(0);
-    },
-    jumpTo: function(el) {
-        if (!el) return;//---
-        el = $(PsIs.string(el) ? el.ensureStartsWith('#') : el);
-        
-        if(!isEmpty(el)){
-            var new_position = el.offset();
-            window.scrollTo(new_position.left, new_position.top);
-        }
-    },
-    scrollTo: function(el, speed, onAfter, ctxt) {
-        if (!el) return;//---
-        el = $(PsIs.string(el) ? el.ensureStartsWith('#') : el);
-        if (isEmpty(el)) return;//---
-        
-        jQuery.scrollTo(el.offset().top, PsIs.number(speed) || speed ? speed : 500, {
-            onAfter: PsUtil.once(onAfter, ctxt)
-        });
-    },
-    //Метод проверяет, прокручена ли страница в самый низ
-    isScrolledBottom: function() {
-        return $(document).height() == $(window).scrollTop() + $(window).height();
-    },
-    //Метод привязывает функцию, вызываемую при прокручивании окна в самый низ
-    bindWndScrolledBottom: function(callback, ctxt) {
-        PsScrollWndImpl.bindWndScrolledBottom(callback, ctxt);
-    },
-    //Метод отвязывает функцию, вызываемую при прокручивании окна в самый низ
-    unbindWndScrolledBottom: function(callback) {
-        PsScrollWndImpl.unbindWndScrolledBottom(callback);
-    }
-}
 
 /*
  * Набор функций, вызываемых при скроллинге окна.
@@ -2898,6 +2851,68 @@ var PsScrollWndImpl = {
         } else {
             $(window).unbind('scroll', this.OnWndScrolled);
         }
+    }
+}
+
+var PsScroll = {
+    isScrolling: function() {
+        return $('html:animated').size() > 0;
+    },
+    scrollTop: function(speed) {
+        jQuery.scrollTo(0, PsIs.number(speed) || speed ? speed : 500);
+    },
+    jumpTop: function() {
+        jQuery.scrollTo(0);
+    },
+    scrollBottom: function(speed) {
+        jQuery.scrollTo($(document).height(), PsIs.number(speed) || speed ? speed : 500);
+    },
+    jumpBottom: function() {
+        this.scrollBottom(0);
+    },
+    jumpTo: function(el) {
+        if (!el) return;//---
+        el = $(PsIs.string(el) ? el.ensureStartsWith('#') : el);
+        
+        if(!isEmpty(el)){
+            var new_position = el.offset();
+            window.scrollTo(new_position.left, new_position.top);
+        }
+    },
+    scrollTo: function(el, speed, onAfter, ctxt) {
+        if (!el) return;//---
+        el = $(PsIs.string(el) ? el.ensureStartsWith('#') : el);
+        if (isEmpty(el)) return;//---
+        
+        jQuery.scrollTo(el.offset().top, PsIs.number(speed) || speed ? speed : 500, {
+            onAfter: PsUtil.once(onAfter, ctxt)
+        });
+    },
+    //Режим проверки скроллинга в низ страницы
+    isScrolledBottomFast: null,
+    //Метод проверяет, прокручена ли страница в самый низ
+    isScrolledBottom: function() {
+        //Проверим, можно ли пользоваться быстрым вычислением
+        if (this.isScrolledBottomFast === null) {
+            this.isScrolledBottomFast = !!document.body
+                    && PsIs.integer(window.innerHeight) 
+                    && PsIs.integer(window.scrollY) 
+                    && PsIs.integer(document.body.offsetHeight);
+        }
+        
+        if (this.isScrolledBottomFast) {
+            return (window.innerHeight + window.scrollY) >= document.body.offsetHeight;
+        }
+
+        return $(document).height() === $(window).scrollTop() + $(window).height();
+    },
+    //Метод привязывает функцию, вызываемую при прокручивании окна в самый низ
+    bindWndScrolledBottom: function(callback, ctxt) {
+        PsScrollWndImpl.bindWndScrolledBottom(callback, ctxt);
+    },
+    //Метод отвязывает функцию, вызываемую при прокручивании окна в самый низ
+    unbindWndScrolledBottom: function(callback) {
+        PsScrollWndImpl.unbindWndScrolledBottom(callback);
     }
 }
 
