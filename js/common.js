@@ -225,6 +225,15 @@ var PsUrl = {
     isUsualHref2AnotherPage: function(a) {
         var usualHref = this.getUsualHref(a);
         return usualHref && (usualHref != this.locationUrlNoHash());
+    },
+    
+    /*
+     * Метод возвращает название скрипта .php
+     * http://www.uflow.ru/index.php?a=1&b=2 -> index.php
+     */
+    getPhpScriptName: function() {
+        var script = getStringStart(getStringEnd(window.location.href, '/', true), '?', true); //index.php
+        return script && script.endsWith('.php') ? script : '';
     }
 }
 
@@ -2895,9 +2904,9 @@ var PsScroll = {
         //Проверим, можно ли пользоваться быстрым вычислением
         if (this.isScrolledBottomFast === null) {
             this.isScrolledBottomFast = !!document.body
-                    && PsIs.integer(window.innerHeight) 
-                    && PsIs.integer(window.scrollY) 
-                    && PsIs.integer(document.body.offsetHeight);
+            && PsIs.integer(window.innerHeight) 
+            && PsIs.integer(window.scrollY) 
+            && PsIs.integer(document.body.offsetHeight);
         }
         
         if (this.isScrolledBottomFast) {
