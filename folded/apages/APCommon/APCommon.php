@@ -12,7 +12,7 @@ class AP_APCommon extends BaseAdminPage {
     }
 
     public function buildContent() {
-        echo "<strong>Товарищи админы, будте ооочен аккуратны с админкой</strong>";
+        return '<strong>Товарищи админы, будьте ооочен аккуратны с админкой</strong>';
     }
 
 }
