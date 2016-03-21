@@ -3281,6 +3281,12 @@ var PsFoldingManager = {
     store: new ObjectsStore(),
     FOLDING: function(funique, ident) {
         var eunique = funique+'-'+ident;
+        
+        //Некоторые построители страниц могут не выводить информацию по сущностям фолдингов
+        assert(defs.hasOwnProperty('foldings'), 'На странице отсутствуют параметры фолдингов');
+        assert(defs['foldings'].hasOwnProperty(funique), 'На странице отсутствуют параметры фолдинга ['+funique+']');
+        assert(defs['foldings'][funique].hasOwnProperty(ident), 'На странице отсутствуют параметры сущности фолдинга ['+eunique+']');
+
         var basePath = defs['foldings'][funique][ident]+'/';
         if(!this.store.has(basePath)) {
             var panelJsParams = defs[CONST.PAGE_JS_GROUP_PANELS] || {};
