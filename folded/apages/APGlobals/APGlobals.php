@@ -7,7 +7,10 @@ class AP_APGlobals extends BaseAdminPage {
     }
 
     public function buildContent() {
-        if (PsGlobals::inst()->exists()) {
+        if (ConfigIni::isSdk()) {
+            $PARAMS['sdk'] = true;
+            $PARAMS['exists'] = false;
+        } else if (PsGlobals::inst()->exists()) {
             $PARAMS['exists'] = true;
             $PARAMS['props'] = PsGlobals::inst()->getProps();
         } else {
